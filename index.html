@@ -237,6 +237,7 @@
             <button>Specs</button>
         </div>
     </div>
+    
 
     <footer>
         &copy; 2025 Phone World. All rights reserved. | <a href="#">Privacy Policy</a>
@@ -249,6 +250,7 @@
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
+        // Sidebar toggle functionality
         toggleSidebar.addEventListener('click', () => {
             sidebar.classList.add('open');
         });
@@ -257,9 +259,31 @@
             sidebar.classList.remove('open');
         });
 
+        // Dark mode toggle functionality
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark');
             themeToggle.textContent = body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // Filter functionality
+        const brandFilters = document.querySelectorAll('.brand-filter');
+        const phones = document.querySelectorAll('.phone');
+
+        brandFilters.forEach(filter => {
+            filter.addEventListener('change', () => {
+                const selectedBrands = Array.from(brandFilters)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value);
+
+                phones.forEach(phone => {
+                    const phoneBrand = phone.getAttribute('data-brand');
+                    if (selectedBrands.length === 0 || selectedBrands.includes(phoneBrand)) {
+                        phone.style.display = 'block';
+                    } else {
+                        phone.style.display = 'none';
+                    }
+                });
+            });
         });
     </script>
 </body>
