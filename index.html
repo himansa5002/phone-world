@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone World - Explore the Latest Phones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --text-color: #333;
+            --card-bg: #fff;
+            --button-bg: #007bff;
+            --button-hover-bg: #0056b3;
+            --sidebar-bg: #2c3e50;
+            --footer-bg: #2c3e50;
+        }
+
+        body.dark {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --button-bg: #1a73e8;
+            --button-hover-bg: #1358a5;
+            --sidebar-bg: #1e1e1e;
+            --footer-bg: #1e1e1e;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            color: var(--text-color);
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 10px 20px;
+            color: var(--text-color);
+        }
+
+        #toggleSidebar {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #toggleSidebar:hover {
+            background: var(--button-hover-bg);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            transition: left 0.3s ease, background 0.3s ease;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .sidebar label {
+            display: block;
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        #close-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        #close-btn:hover {
+            background: #c0392b;
+        }
+
+        .phonelist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .phone {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .phone:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .phone img {
+            width: 100%;
+            height: auto;
+        }
+
+        .phone p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            color: var(--text-color);
+        }
+
+        .phone button {
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .phone button:hover {
+            background: var(--button-hover-bg);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--footer-bg);
+            color: white;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        footer a {
+            color: var(--button-bg);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        #themeToggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        #themeToggle:hover {
+            background: var(--button-hover-bg);
+        }
+    </style>
+</head>
+
+<body>
+    <button id="themeToggle">🌙 Dark Mode</button>
+    <h1>Phone World</h1>
+    <p>Welcome to Phone World official website. Explore the specs of all the latest phones here!</p>
+
+    <button id="toggleSidebar">☰ Filter</button>
+
+    <div id="sidebar" class="sidebar">
+        <button id="close-btn">Close</button>
+        <h3>Filter by Brand</h3>
+        <label><input type="checkbox" class="brand-filter" value="Samsung"> Samsung</label>
+        <label><input type="checkbox" class="brand-filter" value="Apple"> Apple</label>
+        <label><input type="checkbox" class="brand-filter" value="Xiaomi"> Xiaomi</label>
+        <label><input type="checkbox" class="brand-filter" value="OnePlus"> OnePlus</label>
+        <label><input type="checkbox" class="brand-filter" value="Oppo"> Oppo</label>
+    </div>
+
+    <div class="phonelist">
+        <div class="phone" data-brand="Samsung">
+            <img src="A16 5g.webp" alt="Samsung Galaxy A16">
+            <p>Samsung Galaxy A16</p>
+            <a href="Samsung A16 5g.html"><button>Specs</button></a>
+        </div>
+        <div class="phone" data-brand="Samsung">
+            <img src="Samsung-Galaxy-A26.webp" alt="Samsung Galaxy A26">
+            <p>Samsung Galaxy A26</p>
+            <button>Specs</button>
+        </div>
+        <div class="phone" data-brand="Samsung">
+            <img src="A36 5g.webp" alt="Samsung Galaxy A36">
+            <p>Samsung Galaxy A36</p>
+            <button>Specs</button>
+        </div>
+        <div class="phone" data-brand="Samsung">
+            <img src="A56 5g.jpg" alt="Samsung Galaxy A56">
+            <p>Samsung Galaxy A56</p>
+            <button>Specs</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Phone World. All rights reserved. | <a href="#">Privacy Policy</a>
+    </footer>
+
+    <script>
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const closeBtn = document.getElementById('close-btn');
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.add('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            themeToggle.textContent = body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+    </script>
+</body>
+
+</html>
